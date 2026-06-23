@@ -302,12 +302,16 @@
     }
 
     .tours-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
       gap: 2rem;
     }
 
     .tour-card {
+      flex: 0 1 340px;
+      min-width: 280px;
+      max-width: 380px;
       border-radius: 20px;
       overflow: hidden;
       background: var(--white);
@@ -393,6 +397,70 @@
       transition: opacity 0.2s, transform 0.2s;
     }
     .tour-cta:hover { opacity: 0.9; transform: scale(1.02); }
+
+    /* ── PRECIO ── */
+    .tour-price-block {
+      margin-top: 1rem;
+      padding: 0.75rem 1rem;
+      background: var(--light);
+      border-radius: 12px;
+      display: flex;
+      align-items: baseline;
+      gap: 6px;
+    }
+    .tour-price-prefix {
+      font-size: 0.78rem;
+      color: var(--gray);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .tour-price-value {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 1.6rem;
+      font-weight: 900;
+      color: var(--primary);
+      line-height: 1;
+    }
+    .tour-price-currency {
+      font-size: 0.85rem;
+      color: var(--gray);
+      font-weight: 600;
+    }
+
+    /* ── CURRENCY SWITCHER ── */
+    .currency-bar {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-bottom: 2.5rem;
+    }
+    .currency-bar-label {
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--gray);
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      margin-right: 4px;
+    }
+    .cur-btn {
+      background: white;
+      border: 2px solid #e5e7eb;
+      color: var(--dark);
+      padding: 6px 16px;
+      border-radius: 20px;
+      font-size: 0.82rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s;
+      letter-spacing: 0.5px;
+    }
+    .cur-btn.active,
+    .cur-btn:hover {
+      background: var(--primary);
+      border-color: var(--primary);
+      color: white;
+    }
 
     /* ── WHY US ── */
     #nosotros { background: var(--dark2); }
@@ -680,12 +748,19 @@
     <p class="section-subtitle" data-i18n="tours_subtitle">Cada tour es guiado, personalizado y diseñado para que te lleves lo mejor de Buenos Aires.</p>
   </div>
 
+  <div class="currency-bar">
+    <span class="currency-bar-label" data-i18n="cur_label">Precio en</span>
+    <button class="cur-btn active" onclick="setCurrency('ARS')">🇦🇷 ARS</button>
+    <button class="cur-btn" onclick="setCurrency('USD')">🇺🇸 USD</button>
+    <button class="cur-btn" onclick="setCurrency('BRL')">🇧🇷 BRL</button>
+  </div>
+
   <div class="tours-grid">
 
     <!-- City Tour -->
     <div class="tour-card">
       <img class="tour-img"
-        src="https://images.unsplash.com/photo-1612294037637-ec328d0e075e?w=700&q=80"
+        src="img/City tour Buenos Aires.jpg"
         alt="City Tour Buenos Aires" loading="lazy" />
       <div class="tour-body">
         <span class="tour-badge" data-i18n="badge_bestseller">Más vendido</span>
@@ -695,16 +770,21 @@
           <span class="tour-feature" data-i18n="ct_f1">Guía bilingüe</span>
           <span class="tour-feature" data-i18n="ct_f2">Transporte incluido</span>
           <span class="tour-feature" data-i18n="ct_f3">Grupos reducidos</span>
-          <span class="tour-feature" data-i18n="ct_f4">~6 horas</span>
+          <span class="tour-feature" data-i18n="ct_f4">3 a 4 horas</span>
         </div>
-        <a href="#contacto" class="tour-cta" data-i18n="cta_reserve">Consultar disponibilidad</a>
+        <div class="tour-price-block">
+          <span class="tour-price-prefix" data-i18n="price_per_person">Por persona</span>
+          <span class="tour-price-value" id="price-ct">$45.000</span>
+          <span class="tour-price-currency" id="cur-ct">ARS</span>
+        </div>
+        <a href="javascript:void(0)" class="tour-cta" data-i18n="cta_reserve" data-tour="ct" onclick="openWA(this)">Consultar disponibilidad</a>
       </div>
     </div>
 
     <!-- Delta del Tigre -->
     <div class="tour-card">
       <img class="tour-img"
-        src="https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=700&q=80"
+        src="img/Tour Delta del Tigre.jpg"
         alt="Tour Delta del Tigre" loading="lazy" />
       <div class="tour-body">
         <span class="tour-badge" data-i18n="badge_nature">Naturaleza</span>
@@ -716,14 +796,19 @@
           <span class="tour-feature" data-i18n="dt_f3">Traslado desde BA</span>
           <span class="tour-feature" data-i18n="dt_f4">~8 horas</span>
         </div>
-        <a href="#contacto" class="tour-cta" data-i18n="cta_reserve">Consultar disponibilidad</a>
+        <div class="tour-price-block">
+          <span class="tour-price-prefix" data-i18n="price_per_person">Por persona</span>
+          <span class="tour-price-value" id="price-dt">$60.000</span>
+          <span class="tour-price-currency" id="cur-dt">ARS</span>
+        </div>
+        <a href="javascript:void(0)" class="tour-cta" data-i18n="cta_reserve" data-tour="dt" onclick="openWA(this)">Consultar disponibilidad</a>
       </div>
     </div>
 
     <!-- Tango -->
     <div class="tour-card">
       <img class="tour-img"
-        src="https://images.unsplash.com/photo-1504609813442-a8924e83f76e?w=700&q=80"
+        src="img/Cena Show Tango 2.webp"
         alt="Show de Tango con Cena" loading="lazy" />
       <div class="tour-body">
         <span class="tour-badge" data-i18n="badge_premium">Premium</span>
@@ -735,7 +820,60 @@
           <span class="tour-feature" data-i18n="tg_f3">Show en vivo</span>
           <span class="tour-feature" data-i18n="tg_f4">Traslado opcional</span>
         </div>
-        <a href="#contacto" class="tour-cta" data-i18n="cta_reserve">Consultar disponibilidad</a>
+        <div class="tour-price-block">
+          <span class="tour-price-prefix" data-i18n="price_from">Desde</span>
+          <span class="tour-price-value" id="price-tg">$97.000</span>
+          <span class="tour-price-currency" id="cur-tg">ARS</span>
+        </div>
+        <a href="javascript:void(0)" class="tour-cta" data-i18n="cta_reserve" data-tour="tg" onclick="openWA(this)">Consultar disponibilidad</a>
+      </div>
+    </div>
+
+    <!-- Campanópolis -->
+    <div class="tour-card">
+      <img class="tour-img"
+        src="img/Campanopolis.jpg"
+        alt="Tour Campanópolis" loading="lazy" />
+      <div class="tour-body">
+        <span class="tour-badge" data-i18n="badge_medieval">Medieval</span>
+        <div class="tour-title" data-i18n="cp_title">Tour Campanópolis</div>
+        <div class="tour-desc" data-i18n="cp_desc">Un viaje al medioevo a 60 km de Buenos Aires. Campanópolis es un pueblo medieval único en Sudamérica con castillos, shows en vivo, gastronomía típica y artesanías. Salida desde el Teatro Colón.</div>
+        <div class="tour-features">
+          <span class="tour-feature" data-i18n="cp_f1">Salida Teatro Colón</span>
+          <span class="tour-feature" data-i18n="cp_f2">Shows medievales</span>
+          <span class="tour-feature" data-i18n="cp_f3">Guía bilingüe</span>
+          <span class="tour-feature" data-i18n="cp_f4">~9 horas</span>
+        </div>
+        <div class="tour-price-block">
+          <span class="tour-price-prefix" data-i18n="price_per_person">Por persona</span>
+          <span class="tour-price-value" id="price-cp">$80.000</span>
+          <span class="tour-price-currency" id="cur-cp">ARS</span>
+        </div>
+        <a href="javascript:void(0)" class="tour-cta" data-i18n="cta_reserve" data-tour="cp" onclick="openWA(this)">Consultar disponibilidad</a>
+      </div>
+    </div>
+
+    <!-- Temaiken -->
+    <div class="tour-card">
+      <img class="tour-img"
+        src="img/temaiken.jpg"
+        alt="Tour Temaiken" loading="lazy" />
+      <div class="tour-body">
+        <span class="tour-badge" data-i18n="badge_family">Familia</span>
+        <div class="tour-title" data-i18n="tk_title">Bioparque Temaiken</div>
+        <div class="tour-desc" data-i18n="tk_desc">El bioparque más importante de Argentina con más de 350 especies. Animales de todo el mundo, área de aves, mariposas, acuario y shows educativos. Una experiencia única para toda la familia.</div>
+        <div class="tour-features">
+          <span class="tour-feature" data-i18n="tk_f1">+350 especies</span>
+          <span class="tour-feature" data-i18n="tk_f2">Transporte incluido</span>
+          <span class="tour-feature" data-i18n="tk_f3">Entrada incluida</span>
+          <span class="tour-feature" data-i18n="tk_f4">~8 horas</span>
+        </div>
+        <div class="tour-price-block">
+          <span class="tour-price-prefix" data-i18n="price_per_person">Por persona</span>
+          <span class="tour-price-value" id="price-tk">$110.000</span>
+          <span class="tour-price-currency" id="cur-tk">ARS</span>
+        </div>
+        <a href="javascript:void(0)" class="tour-cta" data-i18n="cta_reserve" data-tour="tk" onclick="openWA(this)">Consultar disponibilidad</a>
       </div>
     </div>
 
@@ -787,25 +925,33 @@
       <p data-i18n="contact_text">Cada reserva es única. Contanos tu fecha, cuántas personas viajan y qué tour te interesa — el resto lo coordinamos nosotros.</p>
 
       <div class="contact-channels">
-        <a href="https://wa.me/5491100000000?text=Hola%2C%20quiero%20consultar%20sobre%20un%20tour" target="_blank" class="channel-link">
-          <div class="channel-icon ch-wa">💬</div>
+        <a href="https://wa.me/5491158412348?text=Hola%2C%20quiero%20consultar%20sobre%20un%20tour" target="_blank" class="channel-link">
+          <div class="channel-icon ch-wa">
+            <svg viewBox="0 0 32 32" width="26" height="26" fill="white" xmlns="http://www.w3.org/2000/svg">
+              <path d="M16 2C8.268 2 2 8.268 2 16c0 2.444.655 4.733 1.8 6.7L2 30l7.5-1.775A13.94 13.94 0 0016 30c7.732 0 14-6.268 14-14S23.732 2 16 2zm0 25.5a11.44 11.44 0 01-5.8-1.575l-.416-.247-4.45 1.052 1.072-4.328-.272-.444A11.46 11.46 0 014.5 16C4.5 9.648 9.648 4.5 16 4.5S27.5 9.648 27.5 16 22.352 27.5 16 27.5zm6.29-8.61c-.344-.172-2.037-1.004-2.352-1.119-.316-.115-.546-.172-.776.172-.23.344-.89 1.119-1.09 1.348-.2.23-.4.258-.744.086-.344-.172-1.453-.536-2.767-1.707-1.023-.912-1.713-2.038-1.913-2.382-.2-.344-.021-.53.15-.7.155-.154.344-.402.516-.603.172-.2.23-.344.344-.573.115-.23.058-.43-.029-.603-.086-.172-.776-1.87-1.063-2.562-.28-.672-.564-.58-.776-.59l-.66-.011c-.23 0-.603.086-.919.43s-1.205 1.177-1.205 2.87 1.234 3.33 1.406 3.56c.172.23 2.428 3.707 5.882 5.198.822.355 1.463.567 1.963.726.824.263 1.574.226 2.167.137.66-.099 2.037-.832 2.323-1.636.287-.804.287-1.492.2-1.636-.086-.143-.315-.23-.66-.4z"/>
+            </svg>
+          </div>
           <div>
             <div style="font-size:0.8rem;color:var(--gray);margin-bottom:2px;" data-i18n="ch_wa_label">WhatsApp</div>
-            <div>+54 9 11 0000-0000</div>
+            <div>+54 9 11 5841-2348</div>
           </div>
         </a>
-        <a href="https://instagram.com/tuinstagram" target="_blank" class="channel-link">
-          <div class="channel-icon ch-ig">📸</div>
+        <a href="https://www.instagram.com/mejorargentinaturismo" target="_blank" class="channel-link">
+          <div class="channel-icon ch-ig">
+            <svg viewBox="0 0 32 32" width="24" height="24" fill="white" xmlns="http://www.w3.org/2000/svg">
+              <path d="M16 2.88c4.274 0 4.78.017 6.463.094 1.56.071 2.407.332 2.97.551.747.29 1.28.636 1.84 1.195.56.56.906 1.093 1.195 1.84.22.563.48 1.41.551 2.97.077 1.684.094 2.19.094 6.463s-.017 4.78-.094 6.463c-.071 1.56-.332 2.407-.551 2.97-.29.747-.636 1.28-1.195 1.84-.56.56-1.093.906-1.84 1.195-.563.22-1.41.48-2.97.551-1.683.077-2.188.094-6.463.094s-4.78-.017-6.463-.094c-1.56-.071-2.407-.332-2.97-.551a4.95 4.95 0 01-1.84-1.195 4.95 4.95 0 01-1.195-1.84c-.22-.563-.48-1.41-.551-2.97C2.897 20.78 2.88 20.274 2.88 16s.017-4.78.094-6.463c.071-1.56.332-2.407.551-2.97A4.95 4.95 0 014.72 4.727a4.95 4.95 0 011.84-1.195c.563-.22 1.41-.48 2.97-.551C11.22 2.897 11.726 2.88 16 2.88M16 0c-4.347 0-4.89.018-6.598.096-1.704.078-2.868.348-3.885.743a7.85 7.85 0 00-2.837 1.847A7.85 7.85 0 00.833 5.523C.438 6.54.168 7.704.09 9.408.012 11.116 0 11.659 0 16s.018 4.884.096 6.592c.078 1.704.348 2.868.743 3.885a7.85 7.85 0 001.847 2.837 7.85 7.85 0 002.837 1.847c1.017.395 2.181.665 3.885.743C11.116 31.988 11.659 32 16 32s4.884-.018 6.592-.096c1.704-.078 2.868-.348 3.885-.743a7.85 7.85 0 002.837-1.847 7.85 7.85 0 001.847-2.837c.395-1.017.665-2.181.743-3.885.078-1.708.096-2.251.096-6.592s-.018-4.884-.096-6.592c-.078-1.704-.348-2.868-.743-3.885a7.85 7.85 0 00-1.847-2.837A7.85 7.85 0 0026.477.839C25.46.444 24.296.174 22.592.096 20.884.012 20.341 0 16 0zm0 7.784a8.216 8.216 0 100 16.432 8.216 8.216 0 000-16.432zm0 13.549a5.333 5.333 0 110-10.666 5.333 5.333 0 010 10.666zm10.45-13.874a1.92 1.92 0 11-3.84 0 1.92 1.92 0 013.84 0z"/>
+            </svg>
+          </div>
           <div>
             <div style="font-size:0.8rem;color:var(--gray);margin-bottom:2px;" data-i18n="ch_ig_label">Instagram</div>
             <div>@mejorargentinaturismo</div>
           </div>
         </a>
-        <a href="mailto:contacto@mejorargentinaturismo.com" class="channel-link">
+        <a href="mailto:info@mejorargentinaturismo.com" class="channel-link">
           <div class="channel-icon ch-em">✉️</div>
           <div>
             <div style="font-size:0.8rem;color:var(--gray);margin-bottom:2px;" data-i18n="ch_em_label">Email</div>
-            <div>contacto@mejorargentinaturismo.com</div>
+            <div>info@mejorargentinaturismo.com</div>
           </div>
         </a>
       </div>
@@ -850,7 +996,11 @@
 </footer>
 
 <!-- ── WA FLOAT ── -->
-<a href="https://wa.me/5491100000000?text=Hola%2C%20quiero%20consultar%20sobre%20un%20tour" target="_blank" class="wa-float" title="WhatsApp">💬</a>
+<a href="javascript:void(0)" onclick="openWAGeneral()" class="wa-float" title="WhatsApp">
+  <svg viewBox="0 0 32 32" width="30" height="30" fill="white" xmlns="http://www.w3.org/2000/svg">
+    <path d="M16 2C8.268 2 2 8.268 2 16c0 2.444.655 4.733 1.8 6.7L2 30l7.5-1.775A13.94 13.94 0 0016 30c7.732 0 14-6.268 14-14S23.732 2 16 2zm0 25.5a11.44 11.44 0 01-5.8-1.575l-.416-.247-4.45 1.052 1.072-4.328-.272-.444A11.46 11.46 0 014.5 16C4.5 9.648 9.648 4.5 16 4.5S27.5 9.648 27.5 16 22.352 27.5 16 27.5zm6.29-8.61c-.344-.172-2.037-1.004-2.352-1.119-.316-.115-.546-.172-.776.172-.23.344-.89 1.119-1.09 1.348-.2.23-.4.258-.744.086-.344-.172-1.453-.536-2.767-1.707-1.023-.912-1.713-2.038-1.913-2.382-.2-.344-.021-.53.15-.7.155-.154.344-.402.516-.603.172-.2.23-.344.344-.573.115-.23.058-.43-.029-.603-.086-.172-.776-1.87-1.063-2.562-.28-.672-.564-.58-.776-.59l-.66-.011c-.23 0-.603.086-.919.43s-1.205 1.177-1.205 2.87 1.234 3.33 1.406 3.56c.172.23 2.428 3.707 5.882 5.198.822.355 1.463.567 1.963.726.824.263 1.574.226 2.167.137.66-.099 2.037-.832 2.323-1.636.287-.804.287-1.492.2-1.636-.086-.143-.315-.23-.66-.4z"/>
+  </svg>
+</a>
 
 
 <script>
@@ -877,7 +1027,7 @@
       badge_premium: "Premium",
       ct_title: "City Tour Buenos Aires",
       ct_desc: "Recorremos los barrios más icónicos: La Boca, San Telmo, Palermo y el microcentro histórico. La historia, el arte y la gastronomía porteña en un solo día.",
-      ct_f1: "Guía bilingüe", ct_f2: "Transporte incluido", ct_f3: "Grupos reducidos", ct_f4: "~6 horas",
+      ct_f1: "Guía bilingüe", ct_f2: "Transporte incluido", ct_f3: "Grupos reducidos", ct_f4: "3 a 4 horas",
       dt_title: "Tour Delta del Tigre",
       dt_desc: "A solo 30 km de Buenos Aires, el Delta del Paraná ofrece una experiencia única: navegamos por canales de agua dulce rodeados de vegetación exuberante y vida silvestre.",
       dt_f1: "Navegación en lancha", dt_f2: "Almuerzo típico", dt_f3: "Traslado desde BA", dt_f4: "~8 horas",
@@ -909,6 +1059,14 @@
       form_send: "Enviar consulta",
       form_ok: "¡Mensaje enviado! Te contactamos en breve. 🎉",
       footer_text: "Buenos Aires, Argentina",
+      cur_label: "Precio en", price_per_person: "Por persona", price_from: "Desde",
+      badge_medieval: "Medieval", badge_family: "Familia",
+      cp_title: "Tour Campanópolis",
+      cp_desc: "Un viaje al medioevo a 60 km de Buenos Aires. Campanópolis es un pueblo medieval único en Sudamérica con castillos, shows en vivo, gastronomía típica y artesanías. Salida desde el Teatro Colón.",
+      cp_f1: "Salida Teatro Colón", cp_f2: "Shows medievales", cp_f3: "Guía bilingüe", cp_f4: "~9 horas",
+      tk_title: "Bioparque Temaiken",
+      tk_desc: "El bioparque más importante de Argentina con más de 350 especies. Animales de todo el mundo, área de aves, mariposas, acuario y shows educativos. Una experiencia única para toda la familia.",
+      tk_f1: "+350 especies", tk_f2: "Transporte incluido", tk_f3: "Entrada incluida", tk_f4: "~8 horas",
     },
     en: {
       nav_tours: "Tours",
@@ -931,7 +1089,7 @@
       badge_premium: "Premium",
       ct_title: "Buenos Aires City Tour",
       ct_desc: "We explore the most iconic neighborhoods: La Boca, San Telmo, Palermo and the historic downtown. History, art and gastronomy all in one day.",
-      ct_f1: "Bilingual guide", ct_f2: "Transport included", ct_f3: "Small groups", ct_f4: "~6 hours",
+      ct_f1: "Bilingual guide", ct_f2: "Transport included", ct_f3: "Small groups", ct_f4: "3 to 4 hours",
       dt_title: "Tigre Delta Tour",
       dt_desc: "Just 30 km from Buenos Aires, the Paraná Delta offers a unique experience: we navigate through freshwater canals surrounded by lush vegetation and wildlife.",
       dt_f1: "Boat navigation", dt_f2: "Typical lunch", dt_f3: "Transfer from BA", dt_f4: "~8 hours",
@@ -963,6 +1121,14 @@
       form_send: "Send inquiry",
       form_ok: "Message sent! We'll be in touch soon. 🎉",
       footer_text: "Buenos Aires, Argentina",
+      cur_label: "Price in", price_per_person: "Per person", price_from: "From",
+      badge_medieval: "Medieval", badge_family: "Family",
+      cp_title: "Campanópolis Tour",
+      cp_desc: "A journey to the Middle Ages 60 km from Buenos Aires. Campanópolis is a unique medieval village in South America with castles, live shows, traditional food and crafts. Departure from Teatro Colón.",
+      cp_f1: "Departs Teatro Colón", cp_f2: "Medieval shows", cp_f3: "Bilingual guide", cp_f4: "~9 hours",
+      tk_title: "Temaiken Biopark",
+      tk_desc: "Argentina's most important biopark with over 350 species. Animals from around the world, bird area, butterflies, aquarium and educational shows. A unique experience for the whole family.",
+      tk_f1: "+350 species", tk_f2: "Transport included", tk_f3: "Entry included", tk_f4: "~8 hours",
     },
     pt: {
       nav_tours: "Tours",
@@ -985,7 +1151,7 @@
       badge_premium: "Premium",
       ct_title: "City Tour Buenos Aires",
       ct_desc: "Percorremos os bairros mais icônicos: La Boca, San Telmo, Palermo e o centro histórico. História, arte e gastronomia portenha em um só dia.",
-      ct_f1: "Guia bilíngue", ct_f2: "Transporte incluído", ct_f3: "Grupos pequenos", ct_f4: "~6 horas",
+      ct_f1: "Guia bilíngue", ct_f2: "Transporte incluído", ct_f3: "Grupos pequenos", ct_f4: "3 a 4 horas",
       dt_title: "Tour Delta do Tigre",
       dt_desc: "A apenas 30 km de Buenos Aires, o Delta do Paraná oferece uma experiência única: navegamos por canais de água doce rodeados de vegetação exuberante e vida selvagem.",
       dt_f1: "Passeio de barco", dt_f2: "Almoço típico", dt_f3: "Transfer de BA", dt_f4: "~8 horas",
@@ -1017,8 +1183,81 @@
       form_send: "Enviar mensagem",
       form_ok: "Mensagem enviada! Entraremos em contato em breve. 🎉",
       footer_text: "Buenos Aires, Argentina",
+      cur_label: "Preço em", price_per_person: "Por pessoa", price_from: "A partir de",
+      badge_medieval: "Medieval", badge_family: "Família",
+      cp_title: "Tour Campanópolis",
+      cp_desc: "Uma viagem à Idade Média a 60 km de Buenos Aires. Campanópolis é um vilarejo medieval único na América do Sul com castelos, shows ao vivo, gastronomia típica e artesanato. Saída do Teatro Colón.",
+      cp_f1: "Saída Teatro Colón", cp_f2: "Shows medievais", cp_f3: "Guia bilíngue", cp_f4: "~9 horas",
+      tk_title: "Bioparque Temaiken",
+      tk_desc: "O bioparque mais importante da Argentina com mais de 350 espécies. Animais do mundo todo, área de aves, borboletas, aquário e shows educativos. Uma experiência única para toda a família.",
+      tk_f1: "+350 espécies", tk_f2: "Transporte incluído", tk_f3: "Entrada incluída", tk_f4: "~8 horas",
     }
   };
+
+  /* ─── WHATSAPP POR TOUR E IDIOMA ─── */
+  const WA_NUMBER = '5491158412348';
+  const waMessages = {
+    es: {
+      ct: 'Hola! Me gustaría consultar sobre el *City Tour Buenos Aires*. ¿Tienen disponibilidad?',
+      dt: 'Hola! Me gustaría consultar sobre el *Tour Delta del Tigre*. ¿Tienen disponibilidad?',
+      tg: 'Hola! Me gustaría consultar sobre el *Show de Tango con Cena*. ¿Tienen disponibilidad?',
+      cp: 'Hola! Me gustaría consultar sobre el *Tour Campanópolis*. ¿Tienen disponibilidad?',
+      tk: 'Hola! Me gustaría consultar sobre el *Bioparque Temaiken*. ¿Tienen disponibilidad?',
+    },
+    en: {
+      ct: 'Hello! I\'d like to inquire about the *Buenos Aires City Tour*. Do you have availability?',
+      dt: 'Hello! I\'d like to inquire about the *Tigre Delta Tour*. Do you have availability?',
+      tg: 'Hello! I\'d like to inquire about the *Tango Show & Dinner*. Do you have availability?',
+      cp: 'Hello! I\'d like to inquire about the *Campanópolis Tour*. Do you have availability?',
+      tk: 'Hello! I\'d like to inquire about the *Temaiken Biopark*. Do you have availability?',
+    },
+    pt: {
+      ct: 'Olá! Gostaria de saber mais sobre o *City Tour Buenos Aires*. Vocês têm disponibilidade?',
+      dt: 'Olá! Gostaria de saber mais sobre o *Tour Delta do Tigre*. Vocês têm disponibilidade?',
+      tg: 'Olá! Gostaria de saber mais sobre o *Show de Tango com Jantar*. Vocês têm disponibilidade?',
+      cp: 'Olá! Gostaria de saber mais sobre o *Tour Campanópolis*. Vocês têm disponibilidade?',
+      tk: 'Olá! Gostaria de saber mais sobre o *Bioparque Temaiken*. Vocês têm disponibilidade?',
+    },
+  };
+
+  const waGeneral = {
+    es: 'Hola! Quiero consultar sobre los tours disponibles en Buenos Aires.',
+    en: 'Hello! I\'d like to inquire about the available tours in Buenos Aires.',
+    pt: 'Olá! Gostaria de saber mais sobre os tours disponíveis em Buenos Aires.',
+  };
+
+  function openWAGeneral() {
+    const msg = waGeneral[currentLang];
+    window.open('https://wa.me/' + WA_NUMBER + '?text=' + encodeURIComponent(msg), '_blank');
+  }
+
+  function openWA(el) {
+    const tour = el.getAttribute('data-tour');
+    const msg = waMessages[currentLang][tour];
+    const url = 'https://wa.me/' + WA_NUMBER + '?text=' + encodeURIComponent(msg);
+    window.open(url, '_blank');
+  }
+
+  /* ─── PRECIOS ─── */
+  const prices = {
+    ARS: { ct: '$45.000', dt: '$60.000', tg: '$97.000', cp: '$80.000',  tk: '$110.000', code: 'ARS' },
+    USD: { ct: '$29',     dt: '$39',     tg: '$60',     cp: '$49',      tk: '$69',      code: 'USD' },
+    BRL: { ct: 'R$150',  dt: 'R$195',   tg: 'R$300',   cp: 'R$249',    tk: 'R$379',    code: 'BRL' },
+  };
+
+  function setCurrency(cur) {
+    const p = prices[cur];
+    document.getElementById('price-ct').textContent = p.ct;
+    document.getElementById('price-dt').textContent = p.dt;
+    document.getElementById('price-tg').textContent = p.tg;
+    document.getElementById('price-cp').textContent = p.cp;
+    document.getElementById('price-tk').textContent = p.tk;
+    ['ct','dt','tg','cp','tk'].forEach(id => {
+      document.getElementById('cur-' + id).textContent = p.code;
+    });
+    document.querySelectorAll('.cur-btn').forEach(b => b.classList.remove('active'));
+    document.querySelector(`.cur-btn[onclick="setCurrency('${cur}')"]`).classList.add('active');
+  }
 
   let currentLang = 'es';
 

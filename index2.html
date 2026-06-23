@@ -1,0 +1,1161 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mejor Argentina Turismo – Buenos Aires</title>
+  <meta name="description" content="Tours exclusivos en Buenos Aires: City Tour, Delta del Tigre y Shows de Tango con Cena. Turismo receptivo profesional." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;900&family=Lato:wght@300;400;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --azul:     #003087;   /* azul bandera argentina */
+      --celeste:  #74ACDF;   /* celeste bandera argentina */
+      --celeste2: #5B9FD4;   /* celeste un tono más profundo para hover */
+      --amarillo: #F6B40E;   /* sol de mayo */
+      --amarillo2:#D4970A;
+      --blanco:   #FFFFFF;
+      --gris:     #64748b;
+      --fondo:    #f0f6fc;   /* blanco con tinte celeste muy suave */
+      --dark:     #0a1628;
+      --gradient-az: linear-gradient(135deg, #003087 0%, #74ACDF 100%);
+      --gradient-sol: linear-gradient(135deg, #F6B40E 0%, #D4970A 100%);
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Lato', sans-serif;
+      background: var(--fondo);
+      color: var(--dark);
+      overflow-x: hidden;
+    }
+
+    /* ── FRANJA DECORATIVA SUPERIOR (bandera) ── */
+    .bandera-top {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      height: 4px;
+      z-index: 1100;
+      display: flex;
+    }
+    .bandera-top span:nth-child(1) { flex: 1; background: var(--celeste); }
+    .bandera-top span:nth-child(2) { flex: 1; background: var(--blanco); }
+    .bandera-top span:nth-child(3) { flex: 1; background: var(--celeste); }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 4px; left: 0; right: 0;
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 5%;
+      height: 68px;
+      background: var(--azul);
+      box-shadow: 0 2px 20px rgba(0,48,135,0.35);
+      transition: all 0.3s;
+    }
+
+    .logo {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 900;
+      font-size: 1.25rem;
+      color: var(--blanco);
+      text-decoration: none;
+      letter-spacing: -0.5px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .logo .sol { font-size: 1.4rem; }
+    .logo span { color: var(--amarillo); }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+      align-items: center;
+    }
+    .nav-links a {
+      color: rgba(255,255,255,0.85);
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 600;
+      letter-spacing: 0.4px;
+      transition: color 0.2s;
+      position: relative;
+      padding-bottom: 3px;
+    }
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0;
+      width: 0; height: 2px;
+      background: var(--amarillo);
+      transition: width 0.3s;
+    }
+    .nav-links a:hover { color: var(--amarillo); }
+    .nav-links a:hover::after { width: 100%; }
+
+    .lang-switcher { display: flex; gap: 0.4rem; }
+    .lang-btn {
+      background: rgba(255,255,255,0.1);
+      border: 1px solid rgba(255,255,255,0.25);
+      color: rgba(255,255,255,0.75);
+      padding: 4px 10px;
+      border-radius: 20px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s;
+      letter-spacing: 0.5px;
+    }
+    .lang-btn.active, .lang-btn:hover {
+      background: var(--amarillo);
+      border-color: var(--amarillo);
+      color: var(--azul);
+    }
+
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      padding: 4px;
+    }
+    .hamburger span {
+      width: 24px; height: 2px;
+      background: white;
+      border-radius: 2px;
+      transition: all 0.3s;
+    }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      position: relative;
+      display: flex;
+      align-items: center;
+      overflow: hidden;
+    }
+
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(160deg, rgba(0,48,135,0.82) 0%, rgba(0,48,135,0.45) 50%, rgba(116,172,223,0.3) 100%),
+        url('https://images.unsplash.com/photo-1589909202802-8f4aadce1849?w=1600&q=80') center/cover no-repeat;
+    }
+
+    /* sol de mayo decorativo */
+    .hero-sol {
+      position: absolute;
+      right: -60px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 520px;
+      height: 520px;
+      opacity: 0.07;
+      animation: rotateSol 60s linear infinite;
+    }
+    @keyframes rotateSol {
+      from { transform: translateY(-50%) rotate(0deg); }
+      to   { transform: translateY(-50%) rotate(360deg); }
+    }
+    .hero-sol svg { width: 100%; height: 100%; }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      padding: 0 5%;
+      max-width: 700px;
+      padding-top: 74px;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--amarillo);
+      color: var(--azul);
+      font-size: 0.75rem;
+      font-weight: 800;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      padding: 7px 18px;
+      border-radius: 20px;
+      margin-bottom: 1.5rem;
+    }
+
+    .hero h1 {
+      font-family: 'Montserrat', sans-serif;
+      font-size: clamp(2.4rem, 6vw, 4rem);
+      font-weight: 900;
+      color: var(--blanco);
+      line-height: 1.1;
+      margin-bottom: 1.2rem;
+    }
+    .hero h1 em {
+      font-style: normal;
+      color: var(--amarillo);
+    }
+
+    .hero p {
+      font-size: clamp(1rem, 2vw, 1.15rem);
+      color: rgba(255,255,255,0.85);
+      line-height: 1.75;
+      margin-bottom: 2.5rem;
+      max-width: 520px;
+    }
+
+    .hero-ctas { display: flex; gap: 1rem; flex-wrap: wrap; }
+
+    .btn-primary {
+      background: var(--amarillo);
+      color: var(--azul);
+      padding: 14px 32px;
+      border-radius: 50px;
+      font-weight: 800;
+      font-size: 1rem;
+      text-decoration: none;
+      border: none;
+      cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s;
+      box-shadow: 0 4px 20px rgba(246,180,14,0.45);
+      display: inline-block;
+    }
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 28px rgba(246,180,14,0.6);
+      background: var(--amarillo2);
+    }
+
+    .btn-secondary {
+      background: transparent;
+      color: var(--blanco);
+      padding: 14px 32px;
+      border-radius: 50px;
+      font-weight: 700;
+      font-size: 1rem;
+      text-decoration: none;
+      border: 2px solid rgba(255,255,255,0.55);
+      cursor: pointer;
+      transition: all 0.2s;
+      display: inline-block;
+    }
+    .btn-secondary:hover {
+      border-color: var(--amarillo);
+      color: var(--amarillo);
+    }
+
+    .hero-stats {
+      position: absolute;
+      bottom: 50px; right: 5%;
+      z-index: 2;
+      display: flex;
+      gap: 2rem;
+    }
+    .stat { text-align: center; color: white; }
+    .stat-num {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 2rem;
+      font-weight: 900;
+      color: var(--amarillo);
+      line-height: 1;
+    }
+    .stat-label {
+      font-size: 0.72rem;
+      color: rgba(255,255,255,0.6);
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-top: 4px;
+    }
+
+    .scroll-hint {
+      position: absolute;
+      bottom: 28px; left: 50%;
+      transform: translateX(-50%);
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      color: rgba(255,255,255,0.4);
+      font-size: 0.68rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+    .scroll-hint::after {
+      content: '';
+      width: 1px; height: 40px;
+      background: rgba(255,255,255,0.3);
+      animation: scrollLine 2s ease-in-out infinite;
+    }
+    @keyframes scrollLine {
+      0%,100% { opacity:0.3; transform:scaleY(0.5); }
+      50%      { opacity:1;   transform:scaleY(1);   }
+    }
+
+    /* ── SECTIONS ── */
+    section { padding: 90px 5%; }
+
+    .section-label {
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--celeste2);
+      margin-bottom: 0.75rem;
+    }
+    .section-title {
+      font-family: 'Montserrat', sans-serif;
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      font-weight: 900;
+      line-height: 1.15;
+      color: var(--azul);
+    }
+    .section-subtitle {
+      color: var(--gris);
+      font-size: 1.05rem;
+      line-height: 1.7;
+      max-width: 560px;
+      margin-top: 0.75rem;
+    }
+    .section-header { margin-bottom: 3rem; }
+
+    /* ── decorador de franja ── */
+    .stripe-deco {
+      display: flex;
+      height: 5px;
+      width: 80px;
+      border-radius: 3px;
+      overflow: hidden;
+      margin-bottom: 1.2rem;
+    }
+    .stripe-deco span:nth-child(1) { flex:1; background: var(--celeste); }
+    .stripe-deco span:nth-child(2) { flex:1; background: var(--amarillo); }
+    .stripe-deco span:nth-child(3) { flex:1; background: var(--azul); }
+
+    /* ── TOURS ── */
+    #tours { background: var(--blanco); }
+
+    .tours-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+    }
+
+    .tour-card {
+      border-radius: 20px;
+      overflow: hidden;
+      background: var(--blanco);
+      box-shadow: 0 4px 24px rgba(0,48,135,0.1);
+      transition: transform 0.3s, box-shadow 0.3s;
+      display: flex;
+      flex-direction: column;
+      border-top: 4px solid var(--celeste);
+    }
+    .tour-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 16px 48px rgba(0,48,135,0.18);
+    }
+    .tour-card:nth-child(2) { border-top-color: var(--amarillo); }
+    .tour-card:nth-child(3) { border-top-color: var(--azul); }
+
+    .tour-img {
+      width: 100%; height: 220px;
+      object-fit: cover; display: block;
+    }
+
+    .tour-badge {
+      display: inline-block;
+      background: var(--gradient-az);
+      color: white;
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      padding: 4px 12px;
+      border-radius: 20px;
+      margin-bottom: 0.75rem;
+    }
+    .tour-card:nth-child(2) .tour-badge { background: var(--gradient-sol); color: var(--azul); }
+
+    .tour-body {
+      padding: 1.5rem;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .tour-title {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 1.3rem;
+      font-weight: 800;
+      color: var(--azul);
+      margin-bottom: 0.5rem;
+    }
+
+    .tour-desc {
+      color: var(--gris);
+      font-size: 0.95rem;
+      line-height: 1.65;
+      flex: 1;
+    }
+
+    .tour-features {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin: 1rem 0;
+    }
+    .tour-feature {
+      background: var(--fondo);
+      color: var(--azul);
+      font-size: 0.78rem;
+      font-weight: 700;
+      padding: 5px 12px;
+      border-radius: 20px;
+      border: 1px solid rgba(116,172,223,0.35);
+    }
+    .tour-feature::before { content: '✓  '; color: var(--celeste2); }
+
+    .tour-cta {
+      margin-top: 1rem;
+      display: block;
+      text-align: center;
+      background: var(--gradient-az);
+      color: white;
+      padding: 12px;
+      border-radius: 50px;
+      font-weight: 700;
+      font-size: 0.95rem;
+      text-decoration: none;
+      transition: opacity 0.2s, transform 0.2s;
+    }
+    .tour-cta:hover { opacity: 0.88; transform: scale(1.02); }
+    .tour-card:nth-child(2) .tour-cta {
+      background: var(--gradient-sol);
+      color: var(--azul);
+    }
+
+    /* ── WHY US ── */
+    #nosotros {
+      background: var(--azul);
+      position: relative;
+      overflow: hidden;
+    }
+    #nosotros::before {
+      content: '';
+      position: absolute;
+      top: -100px; right: -100px;
+      width: 400px; height: 400px;
+      border-radius: 50%;
+      background: rgba(116,172,223,0.12);
+    }
+    #nosotros::after {
+      content: '';
+      position: absolute;
+      bottom: -80px; left: -80px;
+      width: 300px; height: 300px;
+      border-radius: 50%;
+      background: rgba(246,180,14,0.08);
+    }
+
+    #nosotros .section-label { color: var(--amarillo); }
+    #nosotros .section-title { color: var(--blanco); }
+    #nosotros .section-subtitle { color: rgba(255,255,255,0.62); }
+    #nosotros .stripe-deco span:nth-child(1) { background: var(--amarillo); }
+    #nosotros .stripe-deco span:nth-child(2) { background: rgba(255,255,255,0.5); }
+    #nosotros .stripe-deco span:nth-child(3) { background: var(--celeste); }
+
+    .why-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1.5rem;
+      margin-top: 3rem;
+      position: relative; z-index: 1;
+    }
+
+    .why-card {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(116,172,223,0.25);
+      border-radius: 18px;
+      padding: 2rem 1.5rem;
+      text-align: center;
+      transition: background 0.3s, border-color 0.3s;
+    }
+    .why-card:hover {
+      background: rgba(255,255,255,0.1);
+      border-color: var(--amarillo);
+    }
+
+    .why-icon { font-size: 2.2rem; margin-bottom: 1rem; }
+    .why-title {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--amarillo);
+      margin-bottom: 0.5rem;
+    }
+    .why-text {
+      color: rgba(255,255,255,0.62);
+      font-size: 0.88rem;
+      line-height: 1.65;
+    }
+
+    /* ── CONTACT ── */
+    #contacto { background: var(--fondo); }
+
+    .contact-wrapper {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: start;
+    }
+
+    .contact-info p {
+      color: var(--gris);
+      line-height: 1.7;
+      margin-bottom: 2rem;
+    }
+
+    .contact-channels {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .channel-link {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 1rem 1.2rem;
+      border-radius: 14px;
+      background: var(--blanco);
+      text-decoration: none;
+      color: var(--dark);
+      font-weight: 600;
+      font-size: 0.95rem;
+      box-shadow: 0 2px 12px rgba(0,48,135,0.07);
+      transition: transform 0.2s, box-shadow 0.2s;
+      border-left: 4px solid transparent;
+    }
+    .channel-link:hover {
+      transform: translateX(5px);
+      box-shadow: 0 4px 20px rgba(0,48,135,0.12);
+    }
+    .channel-link.ch-wa-link { border-left-color: #25D366; }
+    .channel-link.ch-ig-link { border-left-color: #E1306C; }
+    .channel-link.ch-em-link { border-left-color: var(--celeste); }
+
+    .channel-icon {
+      width: 44px; height: 44px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.3rem;
+      flex-shrink: 0;
+    }
+    .ch-wa  { background: #25D366; }
+    .ch-ig  { background: linear-gradient(135deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888); }
+    .ch-em  { background: var(--celeste); }
+
+    /* ── FORM ── */
+    .contact-form {
+      background: var(--blanco);
+      border-radius: 20px;
+      padding: 2.5rem;
+      box-shadow: 0 4px 30px rgba(0,48,135,0.1);
+      border-top: 5px solid var(--celeste);
+    }
+
+    .form-title {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 1.3rem;
+      font-weight: 800;
+      margin-bottom: 1.5rem;
+      color: var(--azul);
+    }
+
+    .form-group { margin-bottom: 1.2rem; }
+    .form-group label {
+      display: block;
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: var(--azul);
+      margin-bottom: 6px;
+      letter-spacing: 0.5px;
+    }
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      width: 100%;
+      padding: 12px 16px;
+      border: 1.5px solid #d1dff2;
+      border-radius: 10px;
+      font-size: 0.95rem;
+      font-family: 'Lato', sans-serif;
+      color: var(--dark);
+      background: var(--fondo);
+      transition: border-color 0.2s;
+      outline: none;
+      resize: vertical;
+    }
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+      border-color: var(--celeste);
+    }
+
+    .form-submit {
+      width: 100%;
+      padding: 14px;
+      background: var(--azul);
+      color: white;
+      border: none;
+      border-radius: 50px;
+      font-size: 1rem;
+      font-weight: 700;
+      font-family: 'Lato', sans-serif;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.2s;
+    }
+    .form-submit:hover { background: #004ab5; transform: scale(1.01); }
+
+    .form-success {
+      display: none;
+      text-align: center;
+      padding: 1.5rem;
+      color: #1a6b3a;
+      font-weight: 600;
+      background: #edfbf2;
+      border-radius: 10px;
+      margin-top: 1rem;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--azul);
+      color: rgba(255,255,255,0.5);
+      text-align: center;
+      padding: 2.5rem 5%;
+      font-size: 0.85rem;
+    }
+
+    .footer-bandera {
+      display: flex;
+      justify-content: center;
+      gap: 6px;
+      margin-bottom: 1rem;
+    }
+    .footer-bandera span {
+      width: 36px; height: 6px;
+      border-radius: 3px;
+    }
+    .footer-bandera span:nth-child(1) { background: var(--celeste); }
+    .footer-bandera span:nth-child(2) { background: var(--blanco); }
+    .footer-bandera span:nth-child(3) { background: var(--celeste); }
+
+    .footer-logo {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 900;
+      font-size: 1.2rem;
+      color: var(--blanco);
+      margin-bottom: 0.4rem;
+    }
+    .footer-logo span { color: var(--amarillo); }
+
+    footer a { color: var(--amarillo); text-decoration: none; }
+
+    /* ── FLOATING WA ── */
+    .wa-float {
+      position: fixed;
+      bottom: 28px; right: 28px;
+      z-index: 999;
+      width: 60px; height: 60px;
+      background: #25D366;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 20px rgba(37,211,102,0.5);
+      text-decoration: none;
+      font-size: 1.7rem;
+      transition: transform 0.2s, box-shadow 0.2s;
+      animation: waPulse 3s ease-in-out infinite;
+    }
+    .wa-float:hover {
+      transform: scale(1.1);
+      box-shadow: 0 8px 30px rgba(37,211,102,0.65);
+    }
+    @keyframes waPulse {
+      0%,100% { box-shadow: 0 4px 20px rgba(37,211,102,0.5); }
+      50%      { box-shadow: 0 4px 30px rgba(37,211,102,0.8), 0 0 0 8px rgba(37,211,102,0.15); }
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .nav-links.open {
+        display: flex;
+        flex-direction: column;
+        position: absolute;
+        top: 68px; left: 0; right: 0;
+        background: var(--azul);
+        padding: 1.5rem 5%;
+        gap: 1rem;
+        border-top: 1px solid rgba(255,255,255,0.1);
+        box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+      }
+      .hamburger { display: flex; }
+      .hero-stats { display: none; }
+      .contact-wrapper { grid-template-columns: 1fr; gap: 2rem; }
+      .scroll-hint { display: none; }
+      .hero-sol { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- franja bandera -->
+<div class="bandera-top">
+  <span></span><span></span><span></span>
+</div>
+
+<!-- ── NAV ── -->
+<nav id="navbar">
+  <a href="#" class="logo">
+    <span class="sol">☀️</span>
+    Mejor<span>Argentina</span>
+  </a>
+
+  <ul class="nav-links" id="navLinks">
+    <li><a href="#tours" data-i18n="nav_tours">Tours</a></li>
+    <li><a href="#nosotros" data-i18n="nav_about">Nosotros</a></li>
+    <li><a href="#contacto" data-i18n="nav_contact">Contacto</a></li>
+  </ul>
+
+  <div style="display:flex; align-items:center; gap:1rem;">
+    <div class="lang-switcher">
+      <button class="lang-btn active" onclick="setLang('es')">ES</button>
+      <button class="lang-btn" onclick="setLang('en')">EN</button>
+      <button class="lang-btn" onclick="setLang('pt')">PT</button>
+    </div>
+    <div class="hamburger" id="hamburger" onclick="toggleMenu()">
+      <span></span><span></span><span></span>
+    </div>
+  </div>
+</nav>
+
+<!-- ── HERO ── -->
+<section class="hero" id="inicio">
+  <div class="hero-bg"></div>
+
+  <!-- sol de mayo decorativo -->
+  <div class="hero-sol">
+    <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="100" cy="100" r="40" fill="currentColor"/>
+      <g stroke="currentColor" stroke-width="6" stroke-linecap="round">
+        <line x1="100" y1="10"  x2="100" y2="40"/>
+        <line x1="100" y1="160" x2="100" y2="190"/>
+        <line x1="10"  y1="100" x2="40"  y2="100"/>
+        <line x1="160" y1="100" x2="190" y2="100"/>
+        <line x1="29"  y1="29"  x2="50"  y2="50"/>
+        <line x1="150" y1="150" x2="171" y2="171"/>
+        <line x1="171" y1="29"  x2="150" y2="50"/>
+        <line x1="50"  y1="150" x2="29"  y2="171"/>
+        <line x1="55"  y1="14"  x2="62"  y2="43"/>
+        <line x1="138" y1="157" x2="145" y2="186"/>
+        <line x1="186" y1="55"  x2="157" y2="62"/>
+        <line x1="43"  y1="138" x2="14"  y2="145"/>
+        <line x1="14"  y1="55"  x2="43"  y2="62"/>
+        <line x1="157" y1="138" x2="186" y2="145"/>
+        <line x1="145" y1="14"  x2="138" y2="43"/>
+        <line x1="62"  y1="157" x2="55"  y2="186"/>
+      </g>
+    </svg>
+  </div>
+
+  <div class="hero-content">
+    <span class="hero-badge">☀️ <span data-i18n="hero_badge">Turismo receptivo · Buenos Aires</span></span>
+    <h1 data-i18n="hero_title">Descubrí Buenos Aires <em>de verdad</em></h1>
+    <p data-i18n="hero_subtitle">Experiencias únicas con guías apasionados. City tours, Delta del Tigre y shows de tango con cena que recordarás toda la vida.</p>
+    <div class="hero-ctas">
+      <a href="#tours" class="btn-primary" data-i18n="hero_cta1">Ver nuestros tours</a>
+      <a href="#contacto" class="btn-secondary" data-i18n="hero_cta2">Consultar reserva</a>
+    </div>
+  </div>
+
+  <div class="hero-stats">
+    <div class="stat">
+      <div class="stat-num">500+</div>
+      <div class="stat-label" data-i18n="stat_groups">Grupos</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">3</div>
+      <div class="stat-label" data-i18n="stat_products">Experiencias</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">★ 5</div>
+      <div class="stat-label" data-i18n="stat_rating">Valoración</div>
+    </div>
+  </div>
+  <div class="scroll-hint" data-i18n="scroll_hint">scroll</div>
+</section>
+
+<!-- ── TOURS ── -->
+<section id="tours">
+  <div class="section-header">
+    <div class="stripe-deco"><span></span><span></span><span></span></div>
+    <div class="section-label" data-i18n="tours_label">Nuestras experiencias</div>
+    <h2 class="section-title" data-i18n="tours_title">Los tours más pedidos</h2>
+    <p class="section-subtitle" data-i18n="tours_subtitle">Cada tour es guiado, personalizado y diseñado para que te lleves lo mejor de Buenos Aires.</p>
+  </div>
+
+  <div class="tours-grid">
+    <!-- City Tour -->
+    <div class="tour-card">
+      <img class="tour-img"
+        src="https://images.unsplash.com/photo-1612294037637-ec328d0e075e?w=700&q=80"
+        alt="City Tour Buenos Aires" loading="lazy" />
+      <div class="tour-body">
+        <span class="tour-badge" data-i18n="badge_bestseller">Más vendido</span>
+        <div class="tour-title" data-i18n="ct_title">City Tour Buenos Aires</div>
+        <div class="tour-desc" data-i18n="ct_desc">Recorremos los barrios más icónicos: La Boca, San Telmo, Palermo y el microcentro histórico. La historia, el arte y la gastronomía porteña en un solo día.</div>
+        <div class="tour-features">
+          <span class="tour-feature" data-i18n="ct_f1">Guía bilingüe</span>
+          <span class="tour-feature" data-i18n="ct_f2">Transporte incluido</span>
+          <span class="tour-feature" data-i18n="ct_f3">Grupos reducidos</span>
+          <span class="tour-feature" data-i18n="ct_f4">~6 horas</span>
+        </div>
+        <a href="#contacto" class="tour-cta" data-i18n="cta_reserve">Consultar disponibilidad</a>
+      </div>
+    </div>
+
+    <!-- Delta del Tigre -->
+    <div class="tour-card">
+      <img class="tour-img"
+        src="https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=700&q=80"
+        alt="Tour Delta del Tigre" loading="lazy" />
+      <div class="tour-body">
+        <span class="tour-badge" data-i18n="badge_nature">Naturaleza</span>
+        <div class="tour-title" data-i18n="dt_title">Tour Delta del Tigre</div>
+        <div class="tour-desc" data-i18n="dt_desc">A solo 30 km de Buenos Aires, el Delta del Paraná ofrece una experiencia única: navegamos por canales de agua dulce rodeados de vegetación exuberante y vida silvestre.</div>
+        <div class="tour-features">
+          <span class="tour-feature" data-i18n="dt_f1">Navegación en lancha</span>
+          <span class="tour-feature" data-i18n="dt_f2">Almuerzo típico</span>
+          <span class="tour-feature" data-i18n="dt_f3">Traslado desde BA</span>
+          <span class="tour-feature" data-i18n="dt_f4">~8 horas</span>
+        </div>
+        <a href="#contacto" class="tour-cta" data-i18n="cta_reserve">Consultar disponibilidad</a>
+      </div>
+    </div>
+
+    <!-- Tango -->
+    <div class="tour-card">
+      <img class="tour-img"
+        src="https://images.unsplash.com/photo-1504609813442-a8924e83f76e?w=700&q=80"
+        alt="Show de Tango con Cena" loading="lazy" />
+      <div class="tour-body">
+        <span class="tour-badge" data-i18n="badge_premium">Premium</span>
+        <div class="tour-title" data-i18n="tg_title">Show de Tango con Cena</div>
+        <div class="tour-desc" data-i18n="tg_desc">Una noche porteña auténtica: cena de tres pasos con vinos seleccionados y un show de tango profesional en un espacio histórico del centro.</div>
+        <div class="tour-features">
+          <span class="tour-feature" data-i18n="tg_f1">Cena incluida</span>
+          <span class="tour-feature" data-i18n="tg_f2">Vinos seleccionados</span>
+          <span class="tour-feature" data-i18n="tg_f3">Show en vivo</span>
+          <span class="tour-feature" data-i18n="tg_f4">Traslado opcional</span>
+        </div>
+        <a href="#contacto" class="tour-cta" data-i18n="cta_reserve">Consultar disponibilidad</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── WHY US ── -->
+<section id="nosotros">
+  <div class="section-header">
+    <div class="stripe-deco"><span></span><span></span><span></span></div>
+    <div class="section-label" data-i18n="why_label">¿Por qué elegirnos?</div>
+    <h2 class="section-title" data-i18n="why_title">Turismo con alma porteña</h2>
+    <p class="section-subtitle" data-i18n="why_subtitle">Somos una agencia local especializada en turismo receptivo. Conocemos Buenos Aires como pocos.</p>
+  </div>
+
+  <div class="why-grid">
+    <div class="why-card">
+      <div class="why-icon">🗣️</div>
+      <div class="why-title" data-i18n="why1_t">Guías especializados</div>
+      <div class="why-text" data-i18n="why1_d">Profesionales con dominio de español, inglés y portugués. Pasión por compartir la historia y cultura porteña.</div>
+    </div>
+    <div class="why-card">
+      <div class="why-icon">📍</div>
+      <div class="why-title" data-i18n="why2_t">Agencia local</div>
+      <div class="why-text" data-i18n="why2_d">Conocemos cada rincón de Buenos Aires. No somos intermediarios; el trato es directo y personalizado.</div>
+    </div>
+    <div class="why-card">
+      <div class="why-icon">👥</div>
+      <div class="why-title" data-i18n="why3_t">Grupos reducidos</div>
+      <div class="why-text" data-i18n="why3_d">Priorizamos la calidad de la experiencia. Grupos chicos, atención individual y ritmo adaptado a cada viajero.</div>
+    </div>
+    <div class="why-card">
+      <div class="why-icon">💬</div>
+      <div class="why-title" data-i18n="why4_t">Atención 24/7</div>
+      <div class="why-text" data-i18n="why4_d">Antes, durante y después del tour. Siempre disponibles por WhatsApp para cualquier consulta o necesidad.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ── CONTACT ── -->
+<section id="contacto">
+  <div class="section-header">
+    <div class="stripe-deco"><span></span><span></span><span></span></div>
+    <div class="section-label" data-i18n="contact_label">Contacto</div>
+    <h2 class="section-title" data-i18n="contact_title">¿Querés reservar o consultar?</h2>
+    <p class="section-subtitle" data-i18n="contact_subtitle">Escribinos por el canal que prefieras. Te respondemos rápido con toda la info que necesitás.</p>
+  </div>
+
+  <div class="contact-wrapper">
+    <div class="contact-info">
+      <p data-i18n="contact_text">Cada reserva es única. Contanos tu fecha, cuántas personas viajan y qué tour te interesa — el resto lo coordinamos nosotros.</p>
+      <div class="contact-channels">
+        <a href="https://wa.me/5491100000000?text=Hola%2C%20quiero%20consultar%20sobre%20un%20tour" target="_blank" class="channel-link ch-wa-link">
+          <div class="channel-icon ch-wa">💬</div>
+          <div>
+            <div style="font-size:0.8rem;color:var(--gris);margin-bottom:2px;" data-i18n="ch_wa_label">WhatsApp</div>
+            <div>+54 9 11 0000-0000</div>
+          </div>
+        </a>
+        <a href="https://instagram.com/mejorargentinaturismo" target="_blank" class="channel-link ch-ig-link">
+          <div class="channel-icon ch-ig">📸</div>
+          <div>
+            <div style="font-size:0.8rem;color:var(--gris);margin-bottom:2px;" data-i18n="ch_ig_label">Instagram</div>
+            <div>@mejorargentinaturismo</div>
+          </div>
+        </a>
+        <a href="mailto:contacto@mejorargentinaturismo.com" class="channel-link ch-em-link">
+          <div class="channel-icon ch-em">✉️</div>
+          <div>
+            <div style="font-size:0.8rem;color:var(--gris);margin-bottom:2px;" data-i18n="ch_em_label">Email</div>
+            <div>contacto@mejorargentinaturismo.com</div>
+          </div>
+        </a>
+      </div>
+    </div>
+
+    <div class="contact-form">
+      <div class="form-title" data-i18n="form_title">Envianos un mensaje</div>
+      <form id="contactForm" onsubmit="handleSubmit(event)">
+        <div class="form-group">
+          <label data-i18n="form_name">Nombre</label>
+          <input type="text" required placeholder="Tu nombre completo" data-i18n-ph="form_name_ph" />
+        </div>
+        <div class="form-group">
+          <label data-i18n="form_email">Email</label>
+          <input type="email" required placeholder="tu@email.com" />
+        </div>
+        <div class="form-group">
+          <label data-i18n="form_tour">Tour de interés</label>
+          <select required>
+            <option value="" data-i18n="form_tour_opt0">Seleccioná un tour…</option>
+            <option value="city"  data-i18n="form_tour_opt1">City Tour Buenos Aires</option>
+            <option value="delta" data-i18n="form_tour_opt2">Tour Delta del Tigre</option>
+            <option value="tango" data-i18n="form_tour_opt3">Show de Tango con Cena</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label data-i18n="form_msg">Mensaje</label>
+          <textarea rows="4" placeholder="Fecha, cantidad de personas, consultas…" data-i18n-ph="form_msg_ph"></textarea>
+        </div>
+        <button type="submit" class="form-submit" data-i18n="form_send">Enviar consulta</button>
+        <div class="form-success" id="formSuccess" data-i18n="form_ok">¡Mensaje enviado! Te contactamos en breve. 🎉</div>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- ── FOOTER ── -->
+<footer>
+  <div class="footer-bandera">
+    <span></span><span></span><span></span>
+  </div>
+  <div class="footer-logo">Mejor<span>Argentina</span> Turismo</div>
+  <p style="margin:0.4rem 0 0.2rem;">© 2026 · <a href="https://www.mejorargentinaturismo.com">www.mejorargentinaturismo.com</a></p>
+  <p data-i18n="footer_text">Buenos Aires, Argentina</p>
+</footer>
+
+<!-- ── WA FLOAT ── -->
+<a href="https://wa.me/5491100000000?text=Hola%2C%20quiero%20consultar%20sobre%20un%20tour" target="_blank" class="wa-float" title="WhatsApp">💬</a>
+
+<script>
+  /* ─── TRANSLATIONS (same as v1) ─── */
+  const i18n = {
+    es: {
+      nav_tours:"Tours", nav_about:"Nosotros", nav_contact:"Contacto",
+      hero_badge:"Turismo receptivo · Buenos Aires",
+      hero_title:"Descubrí Buenos Aires <em>de verdad</em>",
+      hero_subtitle:"Experiencias únicas con guías apasionados. City tours, Delta del Tigre y shows de tango con cena que recordarás toda la vida.",
+      hero_cta1:"Ver nuestros tours", hero_cta2:"Consultar reserva",
+      stat_groups:"Grupos", stat_products:"Experiencias", stat_rating:"Valoración", scroll_hint:"scroll",
+      tours_label:"Nuestras experiencias", tours_title:"Los tours más pedidos",
+      tours_subtitle:"Cada tour es guiado, personalizado y diseñado para que te lleves lo mejor de Buenos Aires.",
+      badge_bestseller:"Más vendido", badge_nature:"Naturaleza", badge_premium:"Premium",
+      ct_title:"City Tour Buenos Aires",
+      ct_desc:"Recorremos los barrios más icónicos: La Boca, San Telmo, Palermo y el microcentro histórico. La historia, el arte y la gastronomía porteña en un solo día.",
+      ct_f1:"Guía bilingüe", ct_f2:"Transporte incluido", ct_f3:"Grupos reducidos", ct_f4:"~6 horas",
+      dt_title:"Tour Delta del Tigre",
+      dt_desc:"A solo 30 km de Buenos Aires, el Delta del Paraná ofrece una experiencia única: navegamos por canales de agua dulce rodeados de vegetación exuberante y vida silvestre.",
+      dt_f1:"Navegación en lancha", dt_f2:"Almuerzo típico", dt_f3:"Traslado desde BA", dt_f4:"~8 horas",
+      tg_title:"Show de Tango con Cena",
+      tg_desc:"Una noche porteña auténtica: cena de tres pasos con vinos seleccionados y un show de tango profesional en un espacio histórico del centro.",
+      tg_f1:"Cena incluida", tg_f2:"Vinos seleccionados", tg_f3:"Show en vivo", tg_f4:"Traslado opcional",
+      cta_reserve:"Consultar disponibilidad",
+      why_label:"¿Por qué elegirnos?", why_title:"Turismo con alma porteña",
+      why_subtitle:"Somos una agencia local especializada en turismo receptivo. Conocemos Buenos Aires como pocos.",
+      why1_t:"Guías especializados", why1_d:"Profesionales con dominio de español, inglés y portugués. Pasión por compartir la historia y cultura porteña.",
+      why2_t:"Agencia local", why2_d:"Conocemos cada rincón de Buenos Aires. No somos intermediarios; el trato es directo y personalizado.",
+      why3_t:"Grupos reducidos", why3_d:"Priorizamos la calidad de la experiencia. Grupos chicos, atención individual y ritmo adaptado a cada viajero.",
+      why4_t:"Atención 24/7", why4_d:"Antes, durante y después del tour. Siempre disponibles por WhatsApp para cualquier consulta o necesidad.",
+      contact_label:"Contacto", contact_title:"¿Querés reservar o consultar?",
+      contact_subtitle:"Escribinos por el canal que prefieras. Te respondemos rápido con toda la info que necesitás.",
+      contact_text:"Cada reserva es única. Contanos tu fecha, cuántas personas viajan y qué tour te interesa — el resto lo coordinamos nosotros.",
+      ch_wa_label:"WhatsApp", ch_ig_label:"Instagram", ch_em_label:"Email",
+      form_title:"Envianos un mensaje",
+      form_name:"Nombre", form_name_ph:"Tu nombre completo", form_email:"Email",
+      form_tour:"Tour de interés",
+      form_tour_opt0:"Seleccioná un tour…", form_tour_opt1:"City Tour Buenos Aires",
+      form_tour_opt2:"Tour Delta del Tigre", form_tour_opt3:"Show de Tango con Cena",
+      form_msg:"Mensaje", form_msg_ph:"Fecha, cantidad de personas, consultas…",
+      form_send:"Enviar consulta", form_ok:"¡Mensaje enviado! Te contactamos en breve. 🎉",
+      footer_text:"Buenos Aires, Argentina",
+    },
+    en: {
+      nav_tours:"Tours", nav_about:"About", nav_contact:"Contact",
+      hero_badge:"Inbound Tourism · Buenos Aires",
+      hero_title:"Discover Buenos Aires <em>the real way</em>",
+      hero_subtitle:"Unique experiences with passionate guides. City tours, Tiger Delta, and tango dinner shows you'll never forget.",
+      hero_cta1:"See our tours", hero_cta2:"Book a tour",
+      stat_groups:"Groups", stat_products:"Experiences", stat_rating:"Rating", scroll_hint:"scroll",
+      tours_label:"Our experiences", tours_title:"Our most popular tours",
+      tours_subtitle:"Every tour is guided, personalized and designed to give you the best of Buenos Aires.",
+      badge_bestseller:"Best seller", badge_nature:"Nature", badge_premium:"Premium",
+      ct_title:"Buenos Aires City Tour",
+      ct_desc:"We explore the most iconic neighborhoods: La Boca, San Telmo, Palermo and the historic downtown. History, art and gastronomy all in one day.",
+      ct_f1:"Bilingual guide", ct_f2:"Transport included", ct_f3:"Small groups", ct_f4:"~6 hours",
+      dt_title:"Tigre Delta Tour",
+      dt_desc:"Just 30 km from Buenos Aires, the Paraná Delta offers a unique experience: we navigate through freshwater canals surrounded by lush vegetation and wildlife.",
+      dt_f1:"Boat navigation", dt_f2:"Typical lunch", dt_f3:"Transfer from BA", dt_f4:"~8 hours",
+      tg_title:"Tango Show & Dinner",
+      tg_desc:"An authentic Buenos Aires night: a three-course dinner with selected wines and a professional tango show in a historic venue in the city center.",
+      tg_f1:"Dinner included", tg_f2:"Selected wines", tg_f3:"Live show", tg_f4:"Optional transfer",
+      cta_reserve:"Check availability",
+      why_label:"Why choose us?", why_title:"Tourism with a local soul",
+      why_subtitle:"We are a local agency specialized in inbound tourism. We know Buenos Aires like no one else.",
+      why1_t:"Expert guides", why1_d:"Professionals fluent in Spanish, English and Portuguese. Passionate about sharing Buenos Aires history and culture.",
+      why2_t:"Local agency", why2_d:"We know every corner of Buenos Aires. No middlemen — direct, personal service.",
+      why3_t:"Small groups", why3_d:"We prioritize experience quality. Small groups, individual attention and a pace adapted to each traveler.",
+      why4_t:"24/7 support", why4_d:"Before, during and after the tour. Always available on WhatsApp for any question or need.",
+      contact_label:"Contact", contact_title:"Want to book or ask a question?",
+      contact_subtitle:"Reach us through your preferred channel. We respond quickly with all the info you need.",
+      contact_text:"Every booking is unique. Tell us your date, number of travelers and which tour interests you — we handle the rest.",
+      ch_wa_label:"WhatsApp", ch_ig_label:"Instagram", ch_em_label:"Email",
+      form_title:"Send us a message",
+      form_name:"Name", form_name_ph:"Your full name", form_email:"Email",
+      form_tour:"Tour of interest",
+      form_tour_opt0:"Select a tour…", form_tour_opt1:"Buenos Aires City Tour",
+      form_tour_opt2:"Tigre Delta Tour", form_tour_opt3:"Tango Show & Dinner",
+      form_msg:"Message", form_msg_ph:"Date, number of people, questions…",
+      form_send:"Send inquiry", form_ok:"Message sent! We'll be in touch soon. 🎉",
+      footer_text:"Buenos Aires, Argentina",
+    },
+    pt: {
+      nav_tours:"Tours", nav_about:"Sobre nós", nav_contact:"Contato",
+      hero_badge:"Turismo receptivo · Buenos Aires",
+      hero_title:"Descubra Buenos Aires <em>de verdade</em>",
+      hero_subtitle:"Experiências únicas com guias apaixonados. City tours, Delta do Tigre e shows de tango com jantar que você nunca vai esquecer.",
+      hero_cta1:"Ver nossos tours", hero_cta2:"Fazer uma reserva",
+      stat_groups:"Grupos", stat_products:"Experiências", stat_rating:"Avaliação", scroll_hint:"rolar",
+      tours_label:"Nossas experiências", tours_title:"Os tours mais procurados",
+      tours_subtitle:"Cada tour é guiado, personalizado e pensado para você viver o melhor de Buenos Aires.",
+      badge_bestseller:"Mais vendido", badge_nature:"Natureza", badge_premium:"Premium",
+      ct_title:"City Tour Buenos Aires",
+      ct_desc:"Percorremos os bairros mais icônicos: La Boca, San Telmo, Palermo e o centro histórico. História, arte e gastronomia portenha em um só dia.",
+      ct_f1:"Guia bilíngue", ct_f2:"Transporte incluído", ct_f3:"Grupos pequenos", ct_f4:"~6 horas",
+      dt_title:"Tour Delta do Tigre",
+      dt_desc:"A apenas 30 km de Buenos Aires, o Delta do Paraná oferece uma experiência única: navegamos por canais de água doce rodeados de vegetação exuberante e vida selvagem.",
+      dt_f1:"Passeio de barco", dt_f2:"Almoço típico", dt_f3:"Transfer de BA", dt_f4:"~8 horas",
+      tg_title:"Show de Tango com Jantar",
+      tg_desc:"Uma noite portenha autêntica: jantar de três tempos com vinhos selecionados e um show de tango profissional em um espaço histórico do centro.",
+      tg_f1:"Jantar incluído", tg_f2:"Vinhos selecionados", tg_f3:"Show ao vivo", tg_f4:"Transfer opcional",
+      cta_reserve:"Verificar disponibilidade",
+      why_label:"Por que nos escolher?", why_title:"Turismo com alma portenha",
+      why_subtitle:"Somos uma agência local especializada em turismo receptivo. Conhecemos Buenos Aires como poucos.",
+      why1_t:"Guias especializados", why1_d:"Profissionais com domínio do espanhol, inglês e português. Paixão por compartilhar a história e cultura portenha.",
+      why2_t:"Agência local", why2_d:"Conhecemos cada cantinho de Buenos Aires. Sem intermediários; atendimento direto e personalizado.",
+      why3_t:"Grupos pequenos", why3_d:"Priorizamos a qualidade da experiência. Grupos pequenos, atenção individual e ritmo adaptado a cada viajante.",
+      why4_t:"Atendimento 24/7", why4_d:"Antes, durante e depois do tour. Sempre disponíveis no WhatsApp para qualquer dúvida ou necessidade.",
+      contact_label:"Contato", contact_title:"Quer reservar ou tirar dúvidas?",
+      contact_subtitle:"Fale conosco pelo canal de sua preferência. Respondemos rápido com todas as informações que você precisa.",
+      contact_text:"Cada reserva é única. Conte-nos sua data, quantas pessoas viajam e qual tour lhe interessa — cuidamos do resto.",
+      ch_wa_label:"WhatsApp", ch_ig_label:"Instagram", ch_em_label:"E-mail",
+      form_title:"Envie uma mensagem",
+      form_name:"Nome", form_name_ph:"Seu nome completo", form_email:"E-mail",
+      form_tour:"Tour de interesse",
+      form_tour_opt0:"Selecione um tour…", form_tour_opt1:"City Tour Buenos Aires",
+      form_tour_opt2:"Tour Delta do Tigre", form_tour_opt3:"Show de Tango com Jantar",
+      form_msg:"Mensagem", form_msg_ph:"Data, número de pessoas, perguntas…",
+      form_send:"Enviar mensagem", form_ok:"Mensagem enviada! Entraremos em contato em breve. 🎉",
+      footer_text:"Buenos Aires, Argentina",
+    }
+  };
+
+  let currentLang = 'es';
+
+  function setLang(lang) {
+    currentLang = lang;
+    document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.lang-btn').forEach(b => {
+      if (b.textContent.toLowerCase() === lang) b.classList.add('active');
+    });
+    const t = i18n[lang];
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+      const key = el.getAttribute('data-i18n');
+      if (t[key] !== undefined) el.innerHTML = t[key];
+    });
+    document.querySelectorAll('[data-i18n-ph]').forEach(el => {
+      const key = el.getAttribute('data-i18n-ph');
+      if (t[key] !== undefined) el.placeholder = t[key];
+    });
+    document.documentElement.lang = lang === 'pt' ? 'pt-BR' : lang;
+  }
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    setTimeout(() => {
+      document.getElementById('formSuccess').style.display = 'block';
+      e.target.reset();
+    }, 300);
+  }
+
+  function toggleMenu() {
+    document.getElementById('navLinks').classList.toggle('open');
+  }
+
+  window.addEventListener('scroll', () => {
+    const nav = document.getElementById('navbar');
+    nav.style.boxShadow = window.scrollY > 50
+      ? '0 4px 24px rgba(0,48,135,0.45)'
+      : '0 2px 20px rgba(0,48,135,0.35)';
+  });
+
+  document.querySelectorAll('.nav-links a').forEach(a => {
+    a.addEventListener('click', () => {
+      document.getElementById('navLinks').classList.remove('open');
+    });
+  });
+</script>
+</body>
+</html>
