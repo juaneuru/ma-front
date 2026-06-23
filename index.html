@@ -48,14 +48,16 @@
     }
 
     .logo {
-      font-family: 'Montserrat', sans-serif;
-      font-weight: 900;
-      font-size: 1.3rem;
-      color: var(--white);
       text-decoration: none;
-      letter-spacing: -0.5px;
+      display: flex;
+      align-items: center;
     }
-    .logo span { color: var(--accent); }
+    .logo img {
+      height: 42px;
+      width: auto;
+      display: block;
+      filter: brightness(0) invert(1);
+    }
 
     .nav-links {
       display: flex;
@@ -560,13 +562,15 @@
     }
     footer a { color: var(--accent); text-decoration: none; }
     .footer-logo {
-      font-family: 'Montserrat', sans-serif;
-      font-weight: 900;
-      font-size: 1.2rem;
-      color: white;
-      margin-bottom: 0.5rem;
+      margin-bottom: 0.75rem;
+      display: flex;
+      justify-content: center;
     }
-    .footer-logo span { color: var(--accent); }
+    .footer-logo img {
+      height: 48px;
+      width: auto;
+      filter: brightness(0) invert(1);
+    }
 
     /* ── FLOATING WA ── */
     .wa-float {
@@ -619,7 +623,7 @@
 
 <!-- ── NAV ── -->
 <nav id="navbar">
-  <a href="#" class="logo">Mejor<span>Argentina</span></a>
+  <a href="#" class="logo"><img src="img/logo5.png" alt="Mejor Argentina Turismo" /></a>
 
   <ul class="nav-links" id="navLinks">
     <li><a href="#tours" data-i18n="nav_tours">Tours</a></li>
@@ -840,7 +844,7 @@
 
 <!-- ── FOOTER ── -->
 <footer>
-  <div class="footer-logo">Mejor<span>Argentina</span> Turismo</div>
+  <div class="footer-logo"><img src="img/logo5.png" alt="Mejor Argentina Turismo" /></div>
   <p style="margin:0.5rem 0 0.25rem;">© 2026 · <a href="https://www.mejorargentinaturismo.com">www.mejorargentinaturismo.com</a></p>
   <p data-i18n="footer_text">Buenos Aires, Argentina</p>
 </footer>
